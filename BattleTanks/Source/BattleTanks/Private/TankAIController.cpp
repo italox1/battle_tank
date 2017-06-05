@@ -27,7 +27,7 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	AimTowardsCrosshair();
+
 	//UE_LOG(LogTemp, Warning, TEXT("LLamadas al tick frame "));
 
 }
@@ -39,13 +39,5 @@ ATank * ATankAIController::GetPlayerTank() const
 	return Cast<ATank>(PlayerTank);
 }
 
-void ATankAIController::AimTowardsCrosshair()
-{
-	if (!GetControlledTank()) { return; }
-	//Get the world location if linetrace through crosshair 
-	//if it hits the landScape 
-		//Tell controlled tank to aim this point 
-
-}
 
 
