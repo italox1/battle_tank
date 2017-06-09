@@ -16,11 +16,15 @@ class BATTLETANKS_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+	
 	ATank * GetControlledTank() const;	
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 	//the crosshair intersects the world 
 	void AimTowardsCrosshair();
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -33,6 +37,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float  CrossHairXLocation = 0.5;
-	
 
- };
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000;
+
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector & HitLocation) const;
+};
