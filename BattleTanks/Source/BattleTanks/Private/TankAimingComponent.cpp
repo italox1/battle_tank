@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values for this component's properties
@@ -16,10 +17,36 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
+	if (!Barrel) { return; }
+	FVector OutLaunchVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
-	// Tell controlled tank to aim this point 
-	UE_LOG(LogTemp, Warning, TEXT("Firing at : %f"), LaunchSpeed);
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		OutLaunchVelocity,
+		StartLocation,
+		HitLocation,
+		LaunchSpeed,
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace);
 
+	if (bHaveAimSolution)// Calculate the OutLaunchVelocity
+	{	
+		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		auto TankName = GetOwner()->GetName();		
+		UE_LOG(LogTemp, Warning, TEXT("%s Aiming at : %s"),*TankName, *AimDirection.ToString());
+		MoveBarrelTowards(AimDirection);
+	}
+
+}
+
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+{
+	 // work-out difference between current barrel reaction , and AimDirection
+	// Move the barrel the right amount this frame 
+	// Give a max elevation speed , and the frame time 
 }
 
 void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
