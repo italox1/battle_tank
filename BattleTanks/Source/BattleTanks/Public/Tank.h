@@ -2,10 +2,14 @@
 
 #pragma once
 
-#include "TankAimingComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"// Put new includes above ever
+
+
+//Forward declarations
+class UTankBarrel;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANKS_API ATank : public APawn
@@ -24,8 +28,7 @@ public:
 
 	void AimAt(FVector HitLocation);
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
