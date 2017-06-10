@@ -18,11 +18,9 @@ protected:
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
-
-
 public:	
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	void AimAt(FVector HitLocation);
 
@@ -34,7 +32,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
-		float LaunchSpeed = 100000;// find sensible start value (default)
+	float LaunchSpeed = 100000;// find sensible start value (default)
 	// Sets default values for this pawn's properties
 	ATank();
 	
