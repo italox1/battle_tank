@@ -12,6 +12,7 @@ class BATTLETANKS_API AProjectile : public AActor
 	GENERATED_BODY()
 	
 public:	
+	class AProjectile;
 	// Sets default values for this actor's properties
 	AProjectile();
 
