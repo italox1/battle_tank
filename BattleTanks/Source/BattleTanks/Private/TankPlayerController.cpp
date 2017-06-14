@@ -6,14 +6,6 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not	possesing a tank "));
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"),*(ControlledTank->GetName()));
-	}
-	
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -30,9 +22,6 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
-
-	//auto Time = GetWorld()->GetTimeSeconds();
-	//UE_LOG(LogTemp, Warning, TEXT("%f AimTowardsCrosshair()"), Time);
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation)) {// Has "side-effect", is going to line trace		
