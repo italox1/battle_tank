@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
+#include "TankMovementComponent.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
 #include "TankAimingComponent.h"
@@ -17,6 +18,7 @@ ATank::ATank()
 	// No need to protect points as added at construction 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 // Called when the game starts or when spawned
