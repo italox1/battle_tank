@@ -34,8 +34,12 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 	// No need to call Super we're replacing the functionality 
 	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal(); 
 	auto IAFowardIntention = MoveVelocity.GetSafeNormal();
+
 	auto ForwardThrow = FVector::DotProduct(TankForward, IAFowardIntention);
 	IntendMoveForwad(ForwardThrow);
+
+	auto RightThrow = FVector::CrossProduct(TankForward, IAFowardIntention).Z;
+	IntendTurnRight(RightThrow);
 	//UE_LOG(LogTemp, Warning, TEXT("%s vectoring to %s "), *TankName, *MoveVelocityString);
 
 }
