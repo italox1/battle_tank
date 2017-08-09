@@ -34,6 +34,8 @@ public:
 	void AimAt(FVector HitLocation);
 
 private:
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 5000;
 	// Sets default values for this pawn's properties

@@ -38,7 +38,7 @@ public:
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	 EFiringState FiringState = EFiringState::Aiming;
+	 EFiringState FiringState = EFiringState::Locked;
 	
 private:
 	// Sets default values for this component's properties
