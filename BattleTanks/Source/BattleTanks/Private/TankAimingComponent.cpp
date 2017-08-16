@@ -9,16 +9,31 @@
 #include "Kismet/GameplayStatics.h"
 
 
+
+
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	
 
+	//PrimaryComponentTick.bCanEverTick = true;
 	// ...
 }
 
+void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
+	if ((FPlatformTime::Seconds() - LastTimeFire) > ReloadTimeInSeconds) {
+		FiringState = EFiringState::Reloading;
+	}
+	// TODO handle aiming component and lock states 
+	UE_LOG(LogTemp,Warning, TEXT("tEST TICK"))
+}
+
+void UTankAimingComponent::BeginPlay() 
+{
+	LastTimeFire = FPlatformTime::Seconds();
+}
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet) {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
@@ -67,13 +82,13 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	Turret->Rotate(DeltaRotator.Yaw);
 }
 
-
 void UTankAimingComponent::Fire()
 {
-	if (!ensure(Barrel && ProjectileBluePrint)) { return; }
-	bool isReloaded = (FPlatformTime::Seconds() - LastTimeFire) > ReloadTimeInSeconds;
-	if (isReloaded)
-	{
+	
+	if (FiringState!= EFiringState::Reloading)
+	{	
+		if (!ensure(Barrel )) { return; }
+		if (!ensure(ProjectileBluePrint)) { return; }
 		// spawn a projectile at the socket location on the barrel 
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBluePrint,
