@@ -3,10 +3,6 @@
 #include "Tank.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
-#include "TankAimingComponent.h"
-
-
-
 
 // Sets default values
 ATank::ATank()
@@ -18,9 +14,6 @@ ATank::ATank()
 void ATank::BeginPlay() 
 {
 	Super::BeginPlay(); // Need to BP Begin Play to run!
-
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
-
 }
 
 void ATank::Fire()
@@ -39,11 +32,4 @@ void ATank::Fire()
 		LastTimeFire = FPlatformTime::Seconds();
 	}
 
-}
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if ( !ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-	
 }
