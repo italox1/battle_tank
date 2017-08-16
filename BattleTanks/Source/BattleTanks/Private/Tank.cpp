@@ -1,7 +1,6 @@
 // Copyright ItaloD Ltd.
 
 #include "Tank.h"
-#include "TankMovementComponent.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
 #include "TankAimingComponent.h"

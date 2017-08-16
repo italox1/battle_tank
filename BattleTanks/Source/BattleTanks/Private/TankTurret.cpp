@@ -1,8 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright ItaloD Ltd.
 
 #include "TankTurret.h"
-
-
 
 void UTankTurret::Rotate(float RelativeSpeed)
 {
