@@ -16,7 +16,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	auto TankName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s DONKEY TANK C++ construct  "), *TankName)
+	//UE_LOG(LogTemp, Warning, TEXT("%s DONKEY TANK C++ construct  "), *TankName)
 
 }
 
@@ -24,13 +24,14 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Need to BP Begin Play to run!
 	auto TankName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s DONKEY TANK C++ BEGIN PLAY  "), *TankName)
+	//UE_LOG(LogTemp, Warning, TEXT("%s DONKEY TANK C++ BEGIN PLAY  "), *TankName)
 }
 
 void ATank::Fire()
 {
+	if (!ensure(Barrel)) { return; }
 	bool isReloaded = (FPlatformTime::Seconds() - LastTimeFire) > ReloadTimeInSeconds;
-	if (Barrel && isReloaded)
+	if (isReloaded)
 	{	
 		// spawn a projectile at the socket location on the barrel 
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
@@ -46,7 +47,7 @@ void ATank::Fire()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	if ( !TankAimingComponent) { return; }
+	if ( !ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 
 }
