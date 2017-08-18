@@ -29,7 +29,7 @@ class BATTLETANKS_API UTankAimingComponent : public UActorComponent
 
 public:	
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	int GetRoundsLeft() const;
+	int32 GetRoundsLeft() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
@@ -69,6 +69,6 @@ private:
 	float ReloadTimeInSeconds = 3;
 
 	double LastTimeFire=0;
-
-	int RoundsLeft = 3;
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	int32 RoundsLeft = 3;
 };
