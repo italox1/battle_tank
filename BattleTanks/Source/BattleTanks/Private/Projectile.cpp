@@ -2,7 +2,6 @@
 
 #include "Projectile.h"
 
-
 // Sets default values
 AProjectile::AProjectile()
 {
@@ -17,12 +16,12 @@ AProjectile::AProjectile()
 	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
 	LaunchBlast->SetupAttachment(RootComponent);
 
-	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Blast"));
-	ImpactBlast->SetupAttachment(RootComponent);
-
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	ProjectileMovement->bAutoActivate = false;
 
+	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Blast"));
+	ImpactBlast->SetupAttachment(RootComponent);
+	ImpactBlast->bAutoActivate = false;
 
 
 
@@ -32,6 +31,7 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 	
 }
 
@@ -42,10 +42,10 @@ void AProjectile::LauncheProjectile(float Speed)
 	ProjectileMovement->Activate(true);
 }
 
-// Called every frame
-void AProjectile::Tick(float DeltaTime)
+
+void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	Super::Tick(DeltaTime);
-
+	UE_LOG(LogTemp, Warning, TEXT("HIT HIT HIT  "));
+	LaunchBlast->Deactivate();
+	ImpactBlast->Activate();
 }
-
