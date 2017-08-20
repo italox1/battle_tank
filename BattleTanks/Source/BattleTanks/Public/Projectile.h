@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include <PhysicsEngine/RadialForceComponent.h>
 #include "ParticleDefinitions.h"
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
@@ -9,6 +9,7 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Projectile.generated.h"
+
 
 
 UCLASS()
@@ -21,7 +22,6 @@ public:
 	AProjectile();
 
 	void LauncheProjectile(float Speed);
-
 
 protected:
 	// Called when the game starts or when spawned
@@ -41,5 +41,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UParticleSystemComponent* ImpactBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	URadialForceComponent* ExplosionForce = nullptr;
 
 };

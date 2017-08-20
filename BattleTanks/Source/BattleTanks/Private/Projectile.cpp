@@ -23,7 +23,9 @@ AProjectile::AProjectile()
 	ImpactBlast->SetupAttachment(RootComponent);
 	ImpactBlast->bAutoActivate = false;
 
+	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
 
+	ExplosionForce->SetupAttachment(RootComponent);
 
 }
 
@@ -48,4 +50,8 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	UE_LOG(LogTemp, Warning, TEXT("HIT HIT HIT  "));
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
+	ExplosionForce->FireImpulse();
+
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
 }
