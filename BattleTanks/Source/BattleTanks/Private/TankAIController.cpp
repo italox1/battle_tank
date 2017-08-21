@@ -16,10 +16,12 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (!ensure(GetPawn())) { return; }
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 	auto ControlledTank = GetPawn();
+	
 
-	if (!ensure(PlayerTank) && !ensure(ControlledTank)) {	return;	}
+	if (!ensure(PlayerTank) || !ensure(ControlledTank)) {	return;	}
 	// Move Towards the player
 	MoveToActor(PlayerTank, AcceptanceRadius); // TODO check if radius is in cm 
 
@@ -39,6 +41,8 @@ void ATankAIController::Tick(float DeltaTime)
 
 void ATankAIController::OnPossessedTankDeath()
 {
+	if (!ensure(GetPawn())) { return; } // TODO Remoe if Okay
+	GetPawn()->DetachFromControllerPendingDestroy();
 	UE_LOG(LogTemp, Warning, TEXT("Received!"))
 }
 
