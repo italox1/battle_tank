@@ -1,6 +1,9 @@
 // Copyright ItaloD Ltd.
 
 #include "Projectile.h"
+#include <Kismet/GameplayStatics.h>
+
+
 
 // Sets default values
 AProjectile::AProjectile()
@@ -39,7 +42,7 @@ void AProjectile::BeginPlay()
 
 void AProjectile::LauncheProjectile(float Speed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Fire  "));
+	//UE_LOG(LogTemp, Warning, TEXT("Fire  "));
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector*Speed);
 	ProjectileMovement->Activate(true);
 }
@@ -47,11 +50,29 @@ void AProjectile::LauncheProjectile(float Speed)
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("HIT HIT HIT  "));
+	
+	//UE_LOG(LogTemp, Warning, TEXT("HIT HIT HIT  "));
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
 
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent();
+
+	FTimerHandle Timer;
+	GetWorld()->GetTimerManager().SetTimer(Timer,this,&AProjectile::OnTimeExpire,DestroyDelay,false);
+
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius,
+		UDamageType::StaticClass(),
+		TArray<AActor*>()// Damage All Actors 
+		);
+}	
+
+void AProjectile::OnTimeExpire()
+{
+	Destroy();
 }
